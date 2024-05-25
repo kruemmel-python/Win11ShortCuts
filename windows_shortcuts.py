@@ -1,6 +1,6 @@
 import tkinter as tk
 
-# Erweiterung der Liste um 30 zusätzliche Windows 11 Tastenkürzel
+
 additional_shortcuts = {
     "ALT+ESC": "Durchlaufen sie geöffnete Fenster",
     "ALT+F4": "Aktives Fenster schließen",
