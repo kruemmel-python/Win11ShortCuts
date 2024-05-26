@@ -1,104 +1,132 @@
 import tkinter as tk
+import pyautogui
 
-
+# Erweiterung der Liste um 30 zusätzliche Windows 11 Tastenkürzel
 additional_shortcuts = {
-    "ALT+ESC": "Durchlaufen sie geöffnete Fenster",
-    "ALT+F4": "Aktives Fenster schließen",
-    "ALT+F8": "Zeigt das eingegebene Kennwort auf dem Anmeldebildschirm an",
-    "ALT+NACH-LINKS-TASTE": "Zurück",
-    "ALT+BILD-AB": "Um einen Bildschirm nach unten navigieren",
-    "ALT+BILD-AUF": "Um einen Bildschirm nach oben verschieben",
-    "ALT+NACH-RECHTS-TASTE": "Vorwärts",
-    "ALT+LEERTASTE": "Kontextmenü für das aktive Fenster öffnen",
-    "ALT+TAB": "Wechseln Sie zwischen geöffneten Apps",
-    "ALT+Unterstrichener Buchstabe": "Führt den Befehl für den unterstrichenen Buchstaben in Apps aus",
-    "STRG+ALT+TAB": "Geöffnete Apps anzeigen",
-    "STRG+PFEILTASTEN": "Startmenügröße ändern",
-    "STRG+PFEILTASTEN (zur Auswahl) + LEERTASTE": "Wählen Sie mehrere Elemente auf dem Desktop oder Explorer aus",
-    "STRG+Klicken auf eine gruppierte App-Schaltfläche": "Durchlaufen Sie Fenster in der Gruppe von der Taskleiste aus",
-    "STRG+NACH-UNTEN-TASTE": "Bewegen Sie den Cursor an den Anfang des nächsten Absatzes",
-    "STRG+F5 (oder) STRG+R": "Aktuelles Fenster aktualisieren",
-    "STRG+NACH-LINKS-TASTE": "Bewegen Sie den Cursor an den Anfang des vorherigen Worts",
-    "STRG+NACH-RECHTS-TASTE": "Bewegen Sie den Cursor an den Anfang des nächsten Worts",
-    "STRG+UMSCHALT": "Tastaturlayout wechseln",
-    "STRG+UMSCHALT+PFEILTASTE": "Textblock auswählen",
-    "STRG+UMSCHALT+Schaltfläche 'App klicken'": "Führen Sie die App über die Taskleiste als Administrator aus",
-    "STRG+UMSCHALT+ESC": "Task-Manager öffnen",
-    "STRG+LEERTASTE": "Aktivieren oder deaktivieren Sie den chinesischen IME",
-    "STRG+NACH-OBEN-TASTE": "Bewegen des Cursors an den Anfang des vorherigen Absatzes",
-    "UMSCHALT+PFEILTASTEN": "Wählen Sie mehrere Elemente aus",
-    "UMSCHALT+App-Schaltfläche klicken": "Öffnen Sie eine weitere Instanz einer App über die Taskleiste",
-    "UMSCHALT+F10": "Kontextmenü für ausgewähltes Element öffnen",
-    "UMSCHALT+Rechtsklick-App-Schaltfläche": "Fenstermenü für die App über die Taskleiste anzeigen",
-    "UMSCHALT+Rechtsklick auf die Schaltfläche 'Gruppierte App'": "Fenstermenü für die Gruppe auf der Taskleiste anzeigen",
-    "Windows-TASTE+TAB": "Vorgangsansicht öffnen",
-    "Windows-Taste+STRG+D": "Hinzufügen eines virtuellen Desktops",
-    "Windows-TASTE+STRG+NACH-RECHTS-TASTE": "Wechseln Sie zwischen virtuellen Desktops, die Sie auf der rechten Seite erstellt haben",
-    "Windows-TASTE+STRG+NACH-LINKS-TASTE": "Wechseln Sie zwischen virtuellen Desktops, die Sie auf der linken Seite erstellt haben",
-    "Windows-TASTE+STRG+F4": "Schließen Sie den virtuellen Desktop, den Sie verwenden",
-    "Windows-Taste": "Startmenü öffnen",
-    "Windows-Taste+A": "Öffnen Sie das Info-Center",
-    "Windows-TASTE+ALT+D": "Datum und Uhrzeit des Öffnens in der Taskleiste",
-    "Windows-Taste+ALT+Zahl (0-9)": "Öffnen Sie die Sprungliste der App in der Zahlenposition auf der Taskleiste",
-    "Windows-Taste+B": "Legen Sie den Fokusbenachrichtigungsbereich auf der Taskleiste fest",
-    "Windows-Taste+C": "Copilot öffnen/schließen",
-    "Windows-Taste+Komma (,)": "Vorübergehender Blick auf den Desktop",
-    "Windows-Taste+STRG+D": "Erstellen eines virtuellen Desktops",
-    "Windows-TASTE+STRG+EINGABETASTE": "Sprachausgabe öffnen",
-    "Windows-TASTE+STRG+F": "Öffnen Sie die Suche nach dem Gerät in einem Domänennetzwerk",
-    "Windows-Taste+STRG+F4": "Schließen Sie den aktiven virtuellen Desktop",
-    "Windows-TASTE+STRG+NACH-LINKS-TASTE": "Wechseln Sie zum virtuellen Desktop auf der linken Seite",
-    "Windows-Taste+STRG+Zahl (0-9)": "Wechseln Sie zum letzten aktiven Fenster der App in der Nummernposition auf der Taskleiste",
-    "Windows-Taste+STRG+Q": "Öffnen Sie Schnellhilfe",
-    "Windows-TASTE+STRG+NACH-RECHTS-TASTE": "Wechseln Sie zum virtuellen Desktop auf der rechten Seite",
-    "Windows-Taste+STRG+UMSCHALT+B": "Reaktivieren Sie das Gerät, wenn sie schwarz oder leer ist",
-    "Windows-TASTE+STRG+UMSCHALT+Zahl (0-9)": "Öffnen Sie eine weitere Instanz als Administrator der App in der Nummerposition auf der Taskleiste",
-    "Windows-Taste+STRG+LEERTASTE": "Ändern Sie die zuvor ausgewählte Eingabeoption",
-    "Windows-Taste+D": "Anzeigen und Ausblenden des Desktops",
-    "Windows-TASTE+NACH-UNTEN-TASTE": "App-Fenster minimieren",
-    "Windows-Taste+E": "Öffnen Sie Explorer",
-    "Windows-Taste+ESC": "Bildschirmlupe beenden",
-    "Windows-Taste+F": "Starten Sie die Feedback-Hub-App",
-    "Windows-Taste+Schrägstrich (/)": "Starten Sie die IME-Neuversion",
-    "Windows-Taste+G": "Starten Sie die Spieleleisten-App",
-    "Windows-Taste+H": "Funktion zum Öffnen des Diktats",
-    "Windows-Taste+Start": "Minimieren oder maximieren Sie alle außer dem aktiven Desktopfenster",
-    "Windows-Taste+I": "Einstellungen öffnen",
-    "Windows-Taste+J": "Legen Sie den Fokus auf einen Tipp für Windows 10 fest, falls zutreffend",
-    "Windows-Taste+K": "Öffnen Sie die Verbindungseinstellungen",
-    "Windows-Taste+L": "Sperrt den Computer",
-    "Windows-Taste+NACH-LINKS-TASTE": "App oder Fenster nach links ausrichten",
-    "Windows-Taste+M": "Minimieren Sie alle Fenster",
-    "Windows-TASTE+Minus (-)": "Verkleinern Sie die Bildschirmlupe",
-    "Windows-Taste+Zahl (0-9)": "Öffnen Sie die App an der Position der Zahl auf der Taskleiste",
-    "Windows-Taste+O": "Geräteausrichtung sperren",
-    "Windows-Taste+P": "Öffnen Sie die Projekteinstellungen",
-    "Windows-Taste+Pause": "Dialogfeld 'Systemeigenschaften anzeigen'",
-    "Windows-Taste+Punkt (.) oder Semikolon (;)": "Emoji-Bereich öffnen",
-    "Windows-Taste+Plus (+)": "Vergrößern Sie die Bildschirmlupe",
-    "Windows-Taste+PrtScn": "Erfassen Sie einen vollständigen Screenshot im Ordner 'Screenshots'"
-    
+    "alt+esc": "Durchlaufen sie geöffnete Fenster",
+    "alt+f4": "Aktives Fenster schließen",
+    "alt+f8": "Zeigt das eingegebene Kennwort auf dem Anmeldebildschirm an",
+    "alt+left": "Zurück",
+    "alt+pgdn": "Um einen Bildschirm nach unten navigieren",
+    "alt+pgup": "Um einen Bildschirm nach oben verschieben",
+    "alt+right": "Vorwärts",
+    "alt+space": "Kontextmenü für das aktive Fenster öffnen",
+    "alt+tab": "Wechseln Sie zwischen geöffneten Apps",
+    "ctrl+alt+tab": "Geöffnete Apps anzeigen",
+    "ctrl+arrow keys": "Startmenügröße ändern",
+    "ctrl+arrow keys (zur Auswahl) + space": "Wählen Sie mehrere Elemente auf dem Desktop oder Explorer aus",
+    "ctrl+klicken auf eine gruppierte App-Schaltfläche": "Durchlaufen Sie Fenster in der Gruppe von der Taskleiste aus",
+    "ctrl+down": "Bewegen Sie den Cursor an den Anfang des nächsten Absatzes",
+    "ctrl+f5": "Aktuelles Fenster aktualisieren",
+    "ctrl+left": "Bewegen Sie den Cursor an den Anfang des vorherigen Worts",
+    "ctrl+right": "Bewegen Sie den Cursor an den Anfang des nächsten Worts",
+    "ctrl+shift": "Tastaturlayout wechseln",
+    "ctrl+shift+arrow keys": "Textblock auswählen",
+    "ctrl+shift+app-click": "Führen Sie die App über die Taskleiste als Administrator aus",
+    "ctrl+shift+esc": "Task-Manager öffnen",
+    "ctrl+space": "Aktivieren oder deaktivieren Sie den chinesischen IME",
+    "ctrl+up": "Bewegen des Cursors an den Anfang des vorherigen Absatzes",
+    "shift+arrow keys": "Wählen Sie mehrere Elemente aus",
+    "shift+app-click": "Öffnen Sie eine weitere Instanz einer App über die Taskleiste",
+    "shift+f10": "Kontextmenü für ausgewähltes Element öffnen",
+    "shift+right-click app-button": "Fenstermenü für die App über die Taskleiste anzeigen",
+    "shift+right-click grouped app-button": "Fenstermenü für die Gruppe auf der Taskleiste anzeigen",
+    "win+tab": "Vorgangsansicht öffnen",
+    "win+ctrl+d": "Hinzufügen eines virtuellen Desktops",
+    "win+ctrl+right": "Wechseln Sie zwischen virtuellen Desktops, die Sie auf der rechten Seite erstellt haben",
+    "win+ctrl+left": "Wechseln Sie zwischen virtuellen Desktops, die Sie auf der linken Seite erstellt haben",
+    "win+ctrl+f4": "Schließen Sie den virtuellen Desktop, den Sie verwenden",
+    "win": "Startmenü öffnen",
+    "win+a": "Öffnen Sie das Info-Center",
+    "win+alt+d": "Datum und Uhrzeit des Öffnens in der Taskleiste",
+    "win+alt+number (0-9)": "Öffnen Sie die Sprungliste der App in der Zahlenposition auf der Taskleiste",
+    "win+b": "Legen Sie den Fokusbenachrichtigungsbereich auf der Taskleiste fest",
+    "win+c": "Copilot öffnen/schließen",
+    "win+,": "Vorübergehender Blick auf den Desktop",
+    "win+ctrl+d": "Erstellen eines virtuellen Desktops",
+    "win+ctrl+enter": "Sprachausgabe öffnen",
+    "win+ctrl+f": "Öffnen Sie die Suche nach dem Gerät in einem Domänennetzwerk",
+    "win+ctrl+f4": "Schließen Sie den aktiven virtuellen Desktop",
+    "win+ctrl+left": "Wechseln Sie zum virtuellen Desktop auf der linken Seite",
+    "win+ctrl+number (0-9)": "Wechseln Sie zum letzten aktiven Fenster der App in der Nummernposition auf der Taskleiste",
+    "win+ctrl+q": "Öffnen Sie Schnellhilfe",
+    "win+ctrl+right": "Wechseln Sie zum virtuellen Desktop auf der rechten Seite",
+    "win+ctrl+shift+b": "Reaktivieren Sie das Gerät, wenn sie schwarz oder leer ist",
+    "win+ctrl+shift+number (0-9)": "Öffnen Sie eine weitere Instanz als Administrator der App in der Nummerposition auf der Taskleiste",
+    "win+ctrl+space": "Ändern Sie die zuvor ausgewählte Eingabeoption",
+    "win+d": "Anzeigen und Ausblenden des Desktops",
+    "win+down": "App-Fenster minimieren",
+    "win+e": "Öffnen Sie Explorer",
+    "win+esc": "Bildschirmlupe beenden",
+    "win+f": "Starten Sie die Feedback-Hub-App",
+    "win+/": "Starten Sie die IME-Neuversion",
+    "win+g": "Starten Sie die Spieleleisten-App",
+    "win+h": "Funktion zum Öffnen des Diktats",
+    "win+home": "Minimieren oder maximieren Sie alle außer dem aktiven Desktopfenster",
+    "win+i": "Einstellungen öffnen",
+    "win+j": "Legen Sie den Fokus auf einen Tipp für Windows 10 fest, falls zutreffend",
+    "win+k": "Öffnen Sie die Verbindungseinstellungen",
+    "win+l": "Sperrt den Computer",
+    "win+left": "App oder Fenster nach links ausrichten",
+    "win+m": "Minimieren Sie alle Fenster",
+    "win+-": "Verkleinern Sie die Bildschirmlupe",
+    "win+number (0-9)": "Öffnen Sie die App an der Position der Zahl auf der Taskleiste",
+    "win+o": "Geräteausrichtung sperren",
+    "win+p": "Öffnen Sie die Projekteinstellungen",
+    "win+pause": "Dialogfeld 'Systemeigenschaften anzeigen'",
+    "win+.;": "Emoji-Bereich öffnen",
+    "win+=": "Vergrößern Sie die Bildschirmlupe",
+    "win+prtscn": "Erfassen Sie einen vollständigen Screenshot im Ordner 'Screenshots'"
 }
-def update_search(*args):
-    search_query = search_var.get().upper()
-    text_box.delete(1.0, tk.END)
-    for shortcut, description in additional_shortcuts.items():
-        if shortcut.startswith(search_query):
-            text_box.insert(tk.END, f"{shortcut}: {description}\n")
+
+# Funktion zum Ausführen eines Shortcuts
+def execute_shortcut(shortcut):
+    try:
+        keys = shortcut.lower().split('+')
+        pyautogui.hotkey(*keys)
+    except Exception as e:
+        print(f"Fehler: {e}")
+
+# Funktion zum Scrollen mit dem Mausrad
+def on_mouse_wheel(event):
+    canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
 # Hauptfenster erstellen
 root = tk.Tk()
 root.title("Windows 11 Tastenkombinationen")
+root.geometry('940x680')  # Setzt die Fenstergröße auf 640x480
 
-# Suchfeld erstellen
-search_var = tk.StringVar()
-search_var.trace("w", update_search)
-entry = tk.Entry(root, textvariable=search_var)
-entry.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+# Scrollbar erstellen
+scrollbar = tk.Scrollbar(root)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-# Textbox erstellen und an das Fenster anpassen
-text_box = tk.Text(root, height=20, width=80)
-text_box.pack(fill=tk.BOTH, expand=True)
+# Canvas erstellen
+canvas = tk.Canvas(root, yscrollcommand=scrollbar.set)
+canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+# Scrollbar konfigurieren
+scrollbar.config(command=canvas.yview)
+
+# Frame für Buttons erstellen
+frame_buttons = tk.Frame(canvas)
+
+# Canvas mit Frame verbinden
+canvas.create_window((0, 0), window=frame_buttons, anchor='nw')
+
+# Funktion zum Aktualisieren der Scrollregion
+def on_configure(event):
+    canvas.configure(scrollregion=canvas.bbox('all'))
+
+frame_buttons.bind('<Configure>', on_configure)
+
+# Binden des Mausrads an die Canvas
+canvas.bind_all("<MouseWheel>", on_mouse_wheel)
+
+# Buttons für jeden Shortcut im Frame erstellen
+for shortcut, description in additional_shortcuts.items():
+    button = tk.Button(frame_buttons, text=f"{shortcut.upper()}: {description}", command=lambda sc=shortcut: execute_shortcut(sc))
+    button.pack(fill='x', padx=10, pady=5)
 
 # Hauptloop starten
 root.mainloop()
+
